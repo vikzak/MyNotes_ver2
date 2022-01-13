@@ -2,4 +2,9 @@
     <string name="app_name">MyNotes_ver2</string>
     <string name="notes">MyNotes</string>
     <string name="subtitle">Android Lesson</string>
+    <string name="action_add">add</string>
+    <string name="action_del">del</string>
+    <string name="action_refresh">refresh</string>
+    <string name="action_search">search</string>
+    <string name="action_help">help</string>
 </resources>

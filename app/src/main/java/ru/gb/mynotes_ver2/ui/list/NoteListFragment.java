@@ -3,6 +3,7 @@ package ru.gb.mynotes_ver2.ui.list;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -50,9 +52,6 @@ public class NoteListFragment extends Fragment implements NoteListView{
                 Toast.makeText(requireContext(), note.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
     }
 
     @Override
@@ -60,9 +59,7 @@ public class NoteListFragment extends Fragment implements NoteListView{
         super.onViewCreated(view, savedInstanceState);
 
         progressBar = view.findViewById(R.id.progressbar);
-
         noteList = view.findViewById(R.id.note_list);
-
         noteList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         //noteList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         noteList.setAdapter(adapter);
@@ -71,6 +68,30 @@ public class NoteListFragment extends Fragment implements NoteListView{
         //DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
         //itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.bg_divider));
         //noteList.addItemDecoration(itemDecoration);
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_add:
+                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.action_del:
+                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.action_help:
+                        Toast.makeText(requireContext(), "help", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.action_refresh:
+                        Toast.makeText(requireContext(), "refresh", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.action_search:
+                        Toast.makeText(requireContext(), "search", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
+            }
+        });
 
         presenter.requestNote();
     }

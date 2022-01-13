@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:title="@string/notes"
-            app:subtitle="@string/subtitle" />
+            app:subtitle="@string/subtitle"
+            app:menu="@menu/menu_main"/>
     </com.google.android.material.appbar.AppBarLayout>
 
 

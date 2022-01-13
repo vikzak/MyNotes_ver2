@@ -22,19 +22,21 @@ public class InMemNoteRepo implements NoteRepo {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private InMemNoteRepo() {
-        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #2", "Message two", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #3", "Message three", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #4", "Message four", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #5", "Message five", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #6", "Message six", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #7", "Message seven", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #8", "Message eight", new Date()));
-        result.add(new Note(UUID.randomUUID().toString(), "Title #9", "Message nine", new Date()));
-//        for (int i = 0; i < 10000; i++){
-//            result.add(new Note(UUID.randomUUID().toString(), "Title #8", "Message eight", new Date()));
-//            result.add(new Note(UUID.randomUUID().toString(), "Title #9", "Message nine", new Date()));
-//        }
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #2", "Message two", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #3", "Message three", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #4", "Message four", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #5", "Message five", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #6", "Message six", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #7", "Message seven", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #8", "Message eight", new Date()));
+//        result.add(new Note(UUID.randomUUID().toString(), "Title #9", "Message nine", new Date()));
+
+        for (int i = 1; i < 500; i++){
+            String messageTitle = "Заметка #" + i;
+            String messageText = "Это текст тестовой заметки №" + i;
+            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, new Date()));
+        }
     }
 
     @Override

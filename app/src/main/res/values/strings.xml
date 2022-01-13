@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyNotes_ver2</string>
+    <string name="notes">MyNotes</string>
+    <string name="subtitle">Android Lesson</string>
+</resources>

@@ -73,18 +73,18 @@ public class NoteListFragment extends Fragment implements NoteListView{
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.action_add:
-                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.action_del:
-                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.action_help:
-                        Toast.makeText(requireContext(), "help", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.action_refresh:
-                        Toast.makeText(requireContext(), "refresh", Toast.LENGTH_SHORT).show();
-                        return true;
+//                    case R.id.action_add:
+//                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    case R.id.action_del:
+//                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    case R.id.action_help:
+//                        Toast.makeText(requireContext(), "help", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    case R.id.action_refresh:
+//                        Toast.makeText(requireContext(), "refresh", Toast.LENGTH_SHORT).show();
+//                        return true;
                     case R.id.action_search:
                         Toast.makeText(requireContext(), "search", Toast.LENGTH_SHORT).show();
                         return true;

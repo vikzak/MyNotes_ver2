@@ -10,4 +10,9 @@
     <string name="is_empty">Список пуст</string>
     <string name="try_again">Пожалуйста, повторите операцию</string>
     <string name="retry">Повторить</string>
+    <string name="button_save">Save</string>
+    <string name="hint_title_note">Enter Title Note</string>
+    <string name="hint_message_note">Enter Note</string>
+    <string name="action_update_note">Update</string>
+    <string name="action_delete_note">Delete</string>
 </resources>

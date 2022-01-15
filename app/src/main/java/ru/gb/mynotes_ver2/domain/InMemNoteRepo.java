@@ -27,20 +27,20 @@ public class InMemNoteRepo implements NoteRepo {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private InMemNoteRepo() {
-        Calendar calendar = Calendar.getInstance();
-        Random random = new Random();
+//        Calendar calendar = Calendar.getInstance();
+//        Random random = new Random();
 
         //private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", Locale.getDefault());
-//        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
-        for (int i = 1; i < 51; i++){
-            int temp = random.nextInt(3);
-            String messageTitle = "Заметка #" + i;
-            String messageText = "Это текст тестовой заметки №" + i;
-            calendar.add(Calendar.DAY_OF_YEAR, - temp);
-            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
+        //        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
+//        for (int i = 1; i < 51; i++){
+//            int temp = random.nextInt(3);
+//            String messageTitle = "Заметка #" + i;
+//            String messageText = "Это текст тестовой заметки №" + i;
+//            calendar.add(Calendar.DAY_OF_YEAR, - temp);
+//            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
             //calendar.add(Calendar.MONTH, - temp);
             //result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
-        }
+//        }
     }
 
     @Override
@@ -56,16 +56,61 @@ public class InMemNoteRepo implements NoteRepo {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (new Random().nextBoolean()) {
-                            if (new Random().nextBoolean()) {
+//                        if (new Random().nextBoolean()) {
+//                            if (new Random().nextBoolean()) {
                                 callback.onSuccess(result);
-                            } else {
-                                callback.onSuccess(new ArrayList<>());
-                            }
-                        } else {
-                            callback.onError(new IOException());
-                        }
+//                            } else {
+//                                callback.onSuccess(new ArrayList<>());
+//                            }
+//                        } else {
+//                            callback.onError(new IOException());
+//                        }
 
+                    }
+                });
+            }
+        });
+
+    }
+
+    @Override
+    public void save(String titleNote, String messageNote, Callback<Note> callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Note note = new Note(UUID.randomUUID().toString(),titleNote,messageNote, new Date());
+                        result.add(note);
+                        callback.onSuccess(note);
+                    }
+                });
+            }
+        });
+
+    }
+
+    @Override
+    public void delete(Note note, Callback<Void> callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        result.remove(note);
+                        callback.onSuccess(null);
                     }
                 });
             }

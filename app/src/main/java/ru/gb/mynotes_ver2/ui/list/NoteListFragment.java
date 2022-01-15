@@ -1,6 +1,8 @@
 package ru.gb.mynotes_ver2.ui.list;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -10,11 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -23,6 +25,8 @@ import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.InMemNoteRepo;
 import ru.gb.mynotes_ver2.domain.Note;
 import ru.gb.mynotes_ver2.ui.adapter.AdapterItem;
+import ru.gb.mynotes_ver2.ui.adapter.NoteAdapterItem;
+import ru.gb.mynotes_ver2.ui.add.AddNoteDialogFragment;
 
 public class NoteListFragment extends Fragment implements NoteListView{
 
@@ -32,6 +36,7 @@ public class NoteListFragment extends Fragment implements NoteListView{
     private RecyclerView noteList;
     private NoteAdapter adapter;
     private NotePresenter presenter;
+    private Note selectedNote;
 
 
     public NoteListFragment(){
@@ -42,12 +47,17 @@ public class NoteListFragment extends Fragment implements NoteListView{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new NotePresenter(requireContext(),this, InMemNoteRepo.INSTANCE);
-        adapter = new NoteAdapter();
+        adapter = new NoteAdapter(this);
 
         adapter.setOnClick(new NoteAdapter.OnClick() {
             @Override
             public void onClick(Note note) {
                 Toast.makeText(requireContext(), note.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(Note note) {
+                selectedNote = note;
             }
         });
     }
@@ -72,27 +82,36 @@ public class NoteListFragment extends Fragment implements NoteListView{
         //noteList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         noteList.setAdapter(adapter);
 
+        view.findViewById(R.id.float_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNoteDialogFragment.newInstance()
+                        .show(getParentFragmentManager(),AddNoteDialogFragment.TAG);
+
+            }
+        });
+
         // работает только с LinearLayout
         // украшения
 //        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
 //        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.bg_divider));
 //        noteList.addItemDecoration(itemDecoration);
         //
-        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.action_add:
-                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.action_del:
-                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
-                        return true;
-                }
-                return false;
-            }
-        });
+//        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()){
+//                    case R.id.action_add:
+//                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    case R.id.action_del:
+//                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -108,6 +127,16 @@ public class NoteListFragment extends Fragment implements NoteListView{
         });
 
         presenter.requestNote();
+        getParentFragmentManager()
+                .setFragmentResultListener(AddNoteDialogFragment.KEY, getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Note note = result.getParcelable(AddNoteDialogFragment.ARG_NOTE);
+                        presenter.onNoteAdd(note);
+
+                    }
+                });
+
     }
 
     @Override
@@ -172,5 +201,40 @@ public class NoteListFragment extends Fragment implements NoteListView{
                         presenter.requestNote();
                     }
                 }).show();
+    }
+
+    @Override
+    public void onNoteAdd(NoteAdapterItem noteAdapterItem) {
+        int index = adapter.addItem(noteAdapterItem);
+        adapter.notifyItemInserted(index - 1);
+        noteList.smoothScrollToPosition(index - 1);
+    }
+
+    @Override
+    public void onNoteRemoved(Note selectedNote) {
+        int index = adapter.removeItem(selectedNote);
+        adapter.notifyItemRemoved(index);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater menuInflater = requireActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.notes_content_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_delete_note){
+            presenter.removeNote(selectedNote);
+            //Toast.makeText(requireContext(), "note deleted: " + selectedNote.getTitle(), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_update_note){
+            Toast.makeText(requireContext(), "note edit / update: " + selectedNote.getTitle(), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

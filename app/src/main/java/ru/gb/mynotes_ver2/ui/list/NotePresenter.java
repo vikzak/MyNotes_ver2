@@ -44,7 +44,8 @@ public class NotePresenter    {
                     Date createdDate = note.getCreatedDate();
                     if (!createdDate.equals(lastDate)){
                         lastDate = note.getCreatedDate();
-                        adapterItems.add(new HeaderAdapterItem(dateFormat.format(lastDate)));
+                        // убираем группировку
+                        // adapterItems.add(new HeaderAdapterItem(dateFormat.format(lastDate)));
                     }
                     adapterItems.add(new NoteAdapterItem(note,
                             note.getTitle(),
@@ -66,5 +67,33 @@ public class NotePresenter    {
             }
         });
 
+    }
+
+
+    public void onNoteAdd(Note note) {
+        NoteAdapterItem noteAdapterItem = new NoteAdapterItem(note,
+                note.getTitle(),
+                note.getMessage(),
+                timeFormat.format(note.getCreatedDate()));
+        view.onNoteAdd(noteAdapterItem);
+        view.hideEmpty();
+
+    }
+
+    public void removeNote(Note selectedNote) {
+        view.showProgress();
+        noteRepo.delete(selectedNote, new Callback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                view.hideProgress();
+                view.onNoteRemoved(selectedNote);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                view.hideProgress();
+
+            }
+        });
     }
 }

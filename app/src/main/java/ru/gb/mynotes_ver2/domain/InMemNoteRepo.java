@@ -23,7 +23,7 @@ public class InMemNoteRepo implements NoteRepo {
 
     private InMemNoteRepo() {
 //        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
-        for (int i = 1; i < 500; i++){
+        for (int i = 1; i < 50; i++){
             String messageTitle = "Заметка #" + i;
             String messageText = "Это текст тестовой заметки №" + i;
             result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, new Date()));

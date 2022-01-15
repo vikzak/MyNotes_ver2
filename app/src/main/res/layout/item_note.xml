@@ -20,10 +20,10 @@
         android:paddingVertical="@dimen/v_margin">
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_notes_24"/>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/ic_baseline_notes_24"/>-->
 
         <TextView
             android:id="@+id/title_note"

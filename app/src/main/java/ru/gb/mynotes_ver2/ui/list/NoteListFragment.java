@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -65,26 +67,32 @@ public class NoteListFragment extends Fragment implements NoteListView{
         noteList.setAdapter(adapter);
 
         // работает только с LinearLayout
-        //DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
-        //itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.bg_divider));
-        //noteList.addItemDecoration(itemDecoration);
+        // украшения
+//        DividerItemDecoration itemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+//        itemDecoration.setDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.bg_divider));
+//        noteList.addItemDecoration(itemDecoration);
+        //
+        BottomNavigationView bottomNavigationView = view.findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_add:
+                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.action_del:
+                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
+            }
+        });
+
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
-//                    case R.id.action_add:
-//                        Toast.makeText(requireContext(), "add", Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    case R.id.action_del:
-//                        Toast.makeText(requireContext(), "del", Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    case R.id.action_help:
-//                        Toast.makeText(requireContext(), "help", Toast.LENGTH_SHORT).show();
-//                        return true;
-//                    case R.id.action_refresh:
-//                        Toast.makeText(requireContext(), "refresh", Toast.LENGTH_SHORT).show();
-//                        return true;
                     case R.id.action_search:
                         Toast.makeText(requireContext(), "search", Toast.LENGTH_SHORT).show();
                         return true;

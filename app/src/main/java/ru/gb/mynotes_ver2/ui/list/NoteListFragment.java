@@ -1,30 +1,23 @@
 package ru.gb.mynotes_ver2.ui.list;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.InMemNoteRepo;
@@ -33,7 +26,9 @@ import ru.gb.mynotes_ver2.ui.adapter.AdapterItem;
 
 public class NoteListFragment extends Fragment implements NoteListView{
 
-    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View empty;
+    private CoordinatorLayout coordinatorLayout;
     private RecyclerView noteList;
     private NoteAdapter adapter;
     private NotePresenter presenter;
@@ -46,7 +41,7 @@ public class NoteListFragment extends Fragment implements NoteListView{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new NotePresenter(this, InMemNoteRepo.INSTANCE);
+        presenter = new NotePresenter(requireContext(),this, InMemNoteRepo.INSTANCE);
         adapter = new NoteAdapter();
 
         adapter.setOnClick(new NoteAdapter.OnClick() {
@@ -61,8 +56,18 @@ public class NoteListFragment extends Fragment implements NoteListView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        progressBar = view.findViewById(R.id.progressbar);
+        coordinatorLayout = view.findViewById(R.id.coordinator);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.requestNote();
+            }
+        });
+
         noteList = view.findViewById(R.id.note_list);
+        empty = view.findViewById(R.id.is_empty);
         noteList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
         //noteList.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         noteList.setAdapter(adapter);
@@ -135,13 +140,37 @@ public class NoteListFragment extends Fragment implements NoteListView{
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        //swipeRefreshLayout.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
 
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
+        //swipeRefreshLayout.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
 
+    }
+
+    @Override
+    public void showEmpty() {
+        empty.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void hideEmpty() {
+        empty.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showError(String error) {
+        Snackbar.make(coordinatorLayout,error, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        presenter.requestNote();
+                    }
+                }).show();
     }
 }

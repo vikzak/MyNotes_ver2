@@ -3,6 +3,7 @@ package ru.gb.mynotes_ver2.domain;
 import android.os.Handler;
 import android.os.Looper;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +32,7 @@ public class InMemNoteRepo implements NoteRepo {
 
         //private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", Locale.getDefault());
 //        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
-        for (int i = 1; i < 30; i++){
+        for (int i = 1; i < 51; i++){
             int temp = random.nextInt(3);
             String messageTitle = "Заметка #" + i;
             String messageText = "Это текст тестовой заметки №" + i;
@@ -55,7 +56,16 @@ public class InMemNoteRepo implements NoteRepo {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onSuccess(result);
+                        if (new Random().nextBoolean()) {
+                            if (new Random().nextBoolean()) {
+                                callback.onSuccess(result);
+                            } else {
+                                callback.onSuccess(new ArrayList<>());
+                            }
+                        } else {
+                            callback.onError(new IOException());
+                        }
+
                     }
                 });
             }

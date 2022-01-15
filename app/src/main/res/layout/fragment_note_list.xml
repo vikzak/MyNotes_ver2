@@ -1,44 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:fitsSystemWindows="true"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/notes"
+                app:subtitle="@string/subtitle"
+                app:menu="@menu/menu_main" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/notes"
-            app:subtitle="@string/subtitle"
-            app:menu="@menu/menu_main"/>
-    </com.google.android.material.appbar.AppBarLayout>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/note_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/note_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <TextView
+            android:id="@+id/is_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="Список пуст"
+            android:text="@string/is_empty" />
 
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:visibility="visible" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         app:menu="@menu/bottom_menu"
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"/>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_alignParentBottom="true"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

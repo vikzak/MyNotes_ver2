@@ -9,4 +9,9 @@ public interface NoteListView {
     void showNote(List<AdapterItem> notes);
     void showProgress();
     void hideProgress();
+
+    void showEmpty();
+    void hideEmpty();
+
+    void showError(String error);
 }

@@ -7,4 +7,7 @@
     <string name="action_refresh">refresh</string>
     <string name="action_search">search</string>
     <string name="action_help">help</string>
+    <string name="is_empty">Список пуст</string>
+    <string name="try_again">Пожалуйста, повторите операцию</string>
+    <string name="retry">Повторить</string>
 </resources>

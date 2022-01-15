@@ -1,5 +1,6 @@
 package ru.gb.mynotes_ver2.ui.list;
 
+import android.content.Context;
 import android.provider.ContactsContract;
 
 import java.text.SimpleDateFormat;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.Callback;
 import ru.gb.mynotes_ver2.domain.Note;
 import ru.gb.mynotes_ver2.domain.NoteRepo;
@@ -22,9 +24,12 @@ public class NotePresenter    {
     private NoteListView view;
     private NoteRepo noteRepo;
 
-    public NotePresenter(NoteListView view, NoteRepo noteRepo) {
+    private Context context;
+
+    public NotePresenter(Context context, NoteListView view, NoteRepo noteRepo) {
         this.view = view;
         this.noteRepo = noteRepo;
+        this.context = context;
     }
 
     public void requestNote(){
@@ -47,10 +52,16 @@ public class NotePresenter    {
                             timeFormat.format(note.getCreatedDate())));
                 }
                 view.showNote(adapterItems);
+                if (adapterItems.isEmpty()){
+                    view.showEmpty();
+                } else {
+                    view.hideEmpty();
+                }
                 view.hideProgress();
             }
             @Override
             public void onError(Throwable throwable) {
+                view.showError(context.getString(R.string.try_again));
                 view.hideProgress();
             }
         });

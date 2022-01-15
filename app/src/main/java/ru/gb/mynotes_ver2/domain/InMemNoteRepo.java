@@ -3,9 +3,13 @@ package ru.gb.mynotes_ver2.domain;
 import android.os.Handler;
 import android.os.Looper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -22,11 +26,19 @@ public class InMemNoteRepo implements NoteRepo {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private InMemNoteRepo() {
+        Calendar calendar = Calendar.getInstance();
+        Random random = new Random();
+
+        //private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", Locale.getDefault());
 //        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
-        for (int i = 1; i < 50; i++){
+        for (int i = 1; i < 30; i++){
+            int temp = random.nextInt(3);
             String messageTitle = "Заметка #" + i;
             String messageText = "Это текст тестовой заметки №" + i;
-            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, new Date()));
+            calendar.add(Calendar.DAY_OF_YEAR, - temp);
+            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
+            //calendar.add(Calendar.MONTH, - temp);
+            //result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
         }
     }
 

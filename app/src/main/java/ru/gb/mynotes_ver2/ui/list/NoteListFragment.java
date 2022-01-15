@@ -29,6 +29,7 @@ import java.util.Locale;
 import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.InMemNoteRepo;
 import ru.gb.mynotes_ver2.domain.Note;
+import ru.gb.mynotes_ver2.ui.adapter.AdapterItem;
 
 public class NoteListFragment extends Fragment implements NoteListView{
 
@@ -105,7 +106,7 @@ public class NoteListFragment extends Fragment implements NoteListView{
     }
 
     @Override
-    public void showNote(List<Note> notes) {
+    public void showNote(List<AdapterItem>notes) {
         adapter.setData(notes);
         adapter.notifyDataSetChanged();
 

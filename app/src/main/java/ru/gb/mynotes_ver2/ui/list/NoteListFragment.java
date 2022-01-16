@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -127,6 +128,12 @@ public class NoteListFragment extends Fragment implements NoteListView{
                 return false;
             }
         });
+
+        // Animation
+//        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+//        defaultItemAnimator.setAddDuration(3000L);
+//        defaultItemAnimator.setRemoveDuration(5000L);
+//        noteList.setItemAnimator(defaultItemAnimator);
 
         presenter.requestNote();
         getParentFragmentManager()

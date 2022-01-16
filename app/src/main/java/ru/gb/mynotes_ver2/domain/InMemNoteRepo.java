@@ -27,20 +27,20 @@ public class InMemNoteRepo implements NoteRepo {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private InMemNoteRepo() {
-//        Calendar calendar = Calendar.getInstance();
-//        Random random = new Random();
+        Calendar calendar = Calendar.getInstance();
+        Random random = new Random();
 
         //private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MMMM.yyyy", Locale.getDefault());
         //        result.add(new Note(UUID.randomUUID().toString(), "Title #1", "Message one", new Date()));
-//        for (int i = 1; i < 51; i++){
-//            int temp = random.nextInt(3);
-//            String messageTitle = "Заметка #" + i;
-//            String messageText = "Это текст тестовой заметки №" + i;
-//            calendar.add(Calendar.DAY_OF_YEAR, - temp);
-//            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
+        for (int i = 1; i < 16; i++){
+            int temp = random.nextInt(3);
+            String messageTitle = "Заметка #" + i;
+            String messageText = "Это текст тестовой заметки №" + i;
+            calendar.add(Calendar.DAY_OF_YEAR, - temp);
+            result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
             //calendar.add(Calendar.MONTH, - temp);
             //result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
-//        }
+        }
     }
 
     @Override

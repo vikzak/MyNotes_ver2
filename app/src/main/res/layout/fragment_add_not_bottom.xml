@@ -6,6 +6,11 @@
     android:padding="@dimen/h_margin"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@drawable/ic_baseline_notes_24" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,6 +32,10 @@
             android:hint="@string/hint_message_note"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+<!--    <DatePicker-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"/>-->
 
     <FrameLayout
         android:layout_width="match_parent"

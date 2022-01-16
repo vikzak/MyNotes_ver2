@@ -7,30 +7,32 @@ import ru.gb.mynotes_ver2.domain.Callback;
 import ru.gb.mynotes_ver2.domain.Note;
 import ru.gb.mynotes_ver2.domain.NoteRepo;
 
-public class AddNotePresenter implements NotePresenter{
-
-    public static final String KEY = "AddNoteDialogFragment_ADDNOTE";
+public class UpdateNotePresenter implements NotePresenter{
+    public static final String KEY = "AddNoteDialogFragment_UPDATENOTE";
     public static final String ARG_NOTE = "ARG_NOTE";
 
     private AddNoteView view;
-    private NoteRepo repo;
+    private NoteRepo repository;
+    private Note note;
 
-
-    public AddNotePresenter(AddNoteView view, NoteRepo repo) {
+    public UpdateNotePresenter(AddNoteView view, NoteRepo repository, Note note) {
         this.view = view;
-        this.repo = repo;
+        this.repository = repository;
+        this.note = note;
 
-        view.setActionButtonText(R.string.button_save);
+        view.setActionButtonText(R.string.button_update);
+        view.setTitle(note.getTitle());
+        view.setMessage(note.getMessage());
     }
-
 
     @Override
     public void onActionPressed(String title, String message) {
         view.showProgress();
-        repo.save(title, message, new Callback<Note>() {
+        repository.update(note.getId(), title, message, new Callback<Note>() {
             @Override
             public void onSuccess(Note result) {
                 view.hideProgress();
+                //view.noteUpdate(result);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(ARG_NOTE, result);
                 view.actionCompleted(KEY, bundle);

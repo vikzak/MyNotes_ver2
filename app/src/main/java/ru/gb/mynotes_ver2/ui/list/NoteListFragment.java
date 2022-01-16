@@ -27,6 +27,8 @@ import ru.gb.mynotes_ver2.domain.Note;
 import ru.gb.mynotes_ver2.ui.adapter.AdapterItem;
 import ru.gb.mynotes_ver2.ui.adapter.NoteAdapterItem;
 import ru.gb.mynotes_ver2.ui.add.AddNoteDialogFragment;
+import ru.gb.mynotes_ver2.ui.add.AddNotePresenter;
+import ru.gb.mynotes_ver2.ui.add.UpdateNotePresenter;
 
 public class NoteListFragment extends Fragment implements NoteListView{
 
@@ -85,7 +87,7 @@ public class NoteListFragment extends Fragment implements NoteListView{
         view.findViewById(R.id.float_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNoteDialogFragment.newInstance()
+                AddNoteDialogFragment.addInstance()
                         .show(getParentFragmentManager(),AddNoteDialogFragment.TAG);
 
             }
@@ -128,12 +130,21 @@ public class NoteListFragment extends Fragment implements NoteListView{
 
         presenter.requestNote();
         getParentFragmentManager()
-                .setFragmentResultListener(AddNoteDialogFragment.KEY, getViewLifecycleOwner(), new FragmentResultListener() {
+                .setFragmentResultListener(AddNotePresenter.KEY, getViewLifecycleOwner(), new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                        Note note = result.getParcelable(AddNoteDialogFragment.ARG_NOTE);
+                        Note note = result.getParcelable(AddNotePresenter.ARG_NOTE);
                         presenter.onNoteAdd(note);
 
+                    }
+                });
+
+        getParentFragmentManager()
+                .setFragmentResultListener(UpdateNotePresenter.KEY, getViewLifecycleOwner(), new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                        Note note = result.getParcelable(UpdateNotePresenter.ARG_NOTE);
+                        presenter.onNoteUpdate(note);
                     }
                 });
 
@@ -217,6 +228,13 @@ public class NoteListFragment extends Fragment implements NoteListView{
     }
 
     @Override
+    public void onNoteUpdated(NoteAdapterItem noteAdapterItem) {
+        int index = adapter.updateItem(noteAdapterItem);
+        adapter.notifyItemChanged(index);
+
+    }
+
+    @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
@@ -232,7 +250,9 @@ public class NoteListFragment extends Fragment implements NoteListView{
             return true;
         }
         if (item.getItemId() == R.id.action_update_note){
-            Toast.makeText(requireContext(), "note edit / update: " + selectedNote.getTitle(), Toast.LENGTH_SHORT).show();
+            AddNoteDialogFragment.updateInstance(selectedNote)
+                    .show(getParentFragmentManager(),AddNoteDialogFragment.TAG);
+            //Toast.makeText(requireContext(), "note edit / update: " + selectedNote.getTitle(), Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onContextItemSelected(item);

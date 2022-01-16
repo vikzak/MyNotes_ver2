@@ -15,4 +15,5 @@
     <string name="hint_message_note">Enter Note</string>
     <string name="action_update_note">Update</string>
     <string name="action_delete_note">Delete</string>
+    <string name="button_update">Update</string>
 </resources>

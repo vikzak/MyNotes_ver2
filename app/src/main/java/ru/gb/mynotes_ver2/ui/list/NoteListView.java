@@ -20,4 +20,6 @@ public interface NoteListView {
     void onNoteAdd(NoteAdapterItem noteAdapterItem);
 
     void onNoteRemoved(Note selectedNote);
+
+    void onNoteUpdated(NoteAdapterItem noteAdapterItem);
 }

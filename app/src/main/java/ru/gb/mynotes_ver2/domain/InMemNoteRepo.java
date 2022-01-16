@@ -97,6 +97,38 @@ public class InMemNoteRepo implements NoteRepo {
     }
 
     @Override
+    public void update(String noteId, String titleNote, String messageNote, Callback<Note> callback) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int index = 0;
+                        for (int i = 0; i < result.size(); i++) {
+                            if (result.get(i).getId().equals(noteId)){
+                                index = i;
+                                break;
+                            }
+                        }
+
+                        Note editableNote = result.get(index);
+                        editableNote.setTitle(titleNote);
+                        editableNote.setMessage(messageNote);
+                        callback.onSuccess(editableNote);
+                    }
+                });
+            }
+        });
+
+    }
+
+    @Override
     public void delete(Note note, Callback<Void> callback) {
         executor.execute(new Runnable() {
             @Override

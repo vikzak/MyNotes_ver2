@@ -96,4 +96,12 @@ public class NotePresenter    {
             }
         });
     }
+
+    public void onNoteUpdate(Note note) {
+        NoteAdapterItem noteAdapterItem = new NoteAdapterItem(note,
+                note.getTitle(),
+                note.getMessage(),
+                timeFormat.format(note.getCreatedDate()));
+        view.onNoteUpdated(noteAdapterItem);
+    }
 }

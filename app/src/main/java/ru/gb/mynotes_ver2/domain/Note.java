@@ -66,6 +66,14 @@ public class Note implements Parcelable {
         return createdDate;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

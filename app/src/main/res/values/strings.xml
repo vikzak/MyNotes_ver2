@@ -2,4 +2,18 @@
     <string name="app_name">MyNotes_ver2</string>
     <string name="notes">MyNotes</string>
     <string name="subtitle">Android Lesson</string>
+    <string name="action_add">add</string>
+    <string name="action_del">del</string>
+    <string name="action_refresh">refresh</string>
+    <string name="action_search">search</string>
+    <string name="action_help">help</string>
+    <string name="is_empty">Список пуст</string>
+    <string name="try_again">Пожалуйста, повторите операцию</string>
+    <string name="retry">Повторить</string>
+    <string name="button_save">Save</string>
+    <string name="hint_title_note">Enter Title Note</string>
+    <string name="hint_message_note">Enter Note</string>
+    <string name="action_update_note">Update</string>
+    <string name="action_delete_note">Delete</string>
+    <string name="button_update">Update</string>
 </resources>

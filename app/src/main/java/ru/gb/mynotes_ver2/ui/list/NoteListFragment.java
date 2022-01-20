@@ -1,5 +1,6 @@
 package ru.gb.mynotes_ver2.ui.list;
 
+import android.app.Notification;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -11,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -46,9 +50,19 @@ public class NoteListFragment extends Fragment implements NoteListView{
         super(R.layout.fragment_note_list);
     }
 
+    private static final String CHANEL_NOTIFICATION_ID = "CHANEL_NOTIFICATION_ID";
+    private static final int NOTIFICATION_ID = 1;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        NotificationChannelCompat channelCompat = new NotificationChannelCompat.Builder(
+                CHANEL_NOTIFICATION_ID, NotificationManagerCompat.IMPORTANCE_DEFAULT)
+                .setDescription(getString(R.string.chanel_description))
+                .setName(getString(R.string.chanel_name))
+                .build();
+        NotificationManagerCompat.from(getContext()).createNotificationChannel(channelCompat);
+
         presenter = new NotePresenter(requireContext(),this, InMemNoteRepo.INSTANCE);
         adapter = new NoteAdapter(this);
 
@@ -90,7 +104,6 @@ public class NoteListFragment extends Fragment implements NoteListView{
             public void onClick(View v) {
                 AddNoteDialogFragment.addInstance()
                         .show(getParentFragmentManager(),AddNoteDialogFragment.TAG);
-
             }
         });
 
@@ -254,14 +267,26 @@ public class NoteListFragment extends Fragment implements NoteListView{
         if (item.getItemId() == R.id.action_delete_note){
             presenter.removeNote(selectedNote);
             //Toast.makeText(requireContext(), "note deleted: " + selectedNote.getTitle(), Toast.LENGTH_SHORT).show();
+            showNotification(getString(R.string.delete_action_message));
             return true;
         }
         if (item.getItemId() == R.id.action_update_note){
             AddNoteDialogFragment.updateInstance(selectedNote)
                     .show(getParentFragmentManager(),AddNoteDialogFragment.TAG);
             //Toast.makeText(requireContext(), "note edit / update: " + selectedNote.getTitle(), Toast.LENGTH_SHORT).show();
+            showNotification(getString(R.string.add_update_message));
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void showNotification(String string) {
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(requireContext());
+        Notification compat = new NotificationCompat.Builder(requireContext(), CHANEL_NOTIFICATION_ID)
+                .setContentTitle("Приложение Заметки")
+                .setContentText(string)
+                .setSmallIcon(R.drawable.ic_baseline_notes_24)
+                .build();
+        notificationManagerCompat.notify(NOTIFICATION_ID, compat);
     }
 }

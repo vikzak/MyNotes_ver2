@@ -1,11 +1,19 @@
 package ru.gb.mynotes_ver2.ui.add;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import android.app.Notification;
 import android.os.Bundle;
+
+import androidx.core.app.NotificationChannelCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.Callback;
 import ru.gb.mynotes_ver2.domain.Note;
 import ru.gb.mynotes_ver2.domain.NoteRepo;
+import ru.gb.mynotes_ver2.ui.MainActivity;
 
 public class AddNotePresenter implements NotePresenter{
 
@@ -34,6 +42,7 @@ public class AddNotePresenter implements NotePresenter{
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(ARG_NOTE, result);
                 view.actionCompleted(KEY, bundle);
+
             }
 
             @Override
@@ -44,4 +53,6 @@ public class AddNotePresenter implements NotePresenter{
         });
 
     }
+
+
 }

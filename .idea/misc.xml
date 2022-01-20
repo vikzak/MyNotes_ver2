@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_divider.xml" value="0.26979166666666665" />
+        <entry key="app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_help_outline_24.xml" value="0.14583333333333334" />
+        <entry key="app/src/main/res/drawable/ic_baseline_notes_24.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22870370370370371" />
         <entry key="app/src/main/res/layout/fragment_add_delete_note.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/fragment_add_not_bottom.xml" value="0.25364583333333335" />

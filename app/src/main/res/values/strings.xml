@@ -16,4 +16,9 @@
     <string name="action_update_note">Update</string>
     <string name="action_delete_note">Delete</string>
     <string name="button_update">Update</string>
+    <string name="chanel_description">Chanel Description</string>
+    <string name="chanel_name">Note Apps</string>
+    <string name="add_action_message">Заметка добавлена в приложение</string>
+    <string name="add_update_message">Ваша заметка обновлена</string>
+    <string name="delete_action_message">Вы удилили заметку</string>
 </resources>

@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.InMemNoteRepo;
 import ru.gb.mynotes_ver2.domain.Note;
+import ru.gb.mynotes_ver2.domain.SharePrefNoteRep;
 
 public class AddNoteDialogFragment extends BottomSheetDialogFragment implements AddNoteView {
 
@@ -65,10 +66,12 @@ public class AddNoteDialogFragment extends BottomSheetDialogFragment implements 
             }
         });
         if (getArguments() == null){
-            presenter = new AddNotePresenter(this, InMemNoteRepo.INSTANCE);
+            //presenter = new AddNotePresenter(this, InMemNoteRepo.INSTANCE);
+            presenter = new AddNotePresenter(this, SharePrefNoteRep.getInstance(requireContext()));
         } else {
             Note note = getArguments().getParcelable(ARG_NOTE);
-            presenter = new UpdateNotePresenter(this, InMemNoteRepo.INSTANCE, note);
+            //presenter = new UpdateNotePresenter(this, InMemNoteRepo.INSTANCE, note);
+            presenter = new UpdateNotePresenter(this, SharePrefNoteRep.getInstance(requireContext()), note);
         }
 
     }

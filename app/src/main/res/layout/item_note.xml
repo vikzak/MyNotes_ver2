@@ -12,42 +12,42 @@
         android:layout_marginVertical="@dimen/v_margin">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/h_margin"
-        android:paddingVertical="@dimen/v_margin">
-
-
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/ic_baseline_notes_24"/>-->
-
-        <TextView
-            android:id="@+id/title_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-            tools:text="Title One" />
-
-        <TextView
-            android:id="@+id/date_note"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/v_margin"
-            android:textAlignment="textEnd"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            tools:text="01.01.2022" />
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/h_margin"
+            android:paddingVertical="@dimen/v_margin">
 
-        <TextView
-            android:id="@+id/content_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/v_margin"
-            tools:text="Message" />
 
-    </LinearLayout>
+            <!--        <ImageView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:src="@drawable/ic_baseline_notes_24"/>-->
+
+            <TextView
+                android:id="@+id/title_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                tools:text="Title One" />
+
+            <TextView
+                android:id="@+id/date_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/v_margin"
+                android:textAlignment="textEnd"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                tools:text="01.01.2022" />
+
+            <TextView
+                android:id="@+id/content_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/v_margin"
+                tools:text="Message" />
+
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>

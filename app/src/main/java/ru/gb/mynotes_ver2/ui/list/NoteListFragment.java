@@ -29,6 +29,7 @@ import java.util.List;
 import ru.gb.mynotes_ver2.R;
 import ru.gb.mynotes_ver2.domain.InMemNoteRepo;
 import ru.gb.mynotes_ver2.domain.Note;
+import ru.gb.mynotes_ver2.domain.SharePrefNoteRep;
 import ru.gb.mynotes_ver2.ui.adapter.AdapterItem;
 import ru.gb.mynotes_ver2.ui.adapter.NoteAdapterItem;
 import ru.gb.mynotes_ver2.ui.add.AddNoteDialogFragment;
@@ -63,7 +64,8 @@ public class NoteListFragment extends Fragment implements NoteListView{
                 .build();
         NotificationManagerCompat.from(getContext()).createNotificationChannel(channelCompat);
 
-        presenter = new NotePresenter(requireContext(),this, InMemNoteRepo.INSTANCE);
+        //presenter = new NotePresenter(requireContext(),this, InMemNoteRepo.INSTANCE);
+        presenter = new NotePresenter(requireContext(),this, SharePrefNoteRep.getInstance(requireContext()));
         adapter = new NoteAdapter(this);
 
         adapter.setOnClick(new NoteAdapter.OnClick() {

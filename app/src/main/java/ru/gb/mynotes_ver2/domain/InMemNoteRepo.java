@@ -38,6 +38,8 @@ public class InMemNoteRepo implements NoteRepo {
             String messageText = "Это текст тестовой заметки №" + i;
             calendar.add(Calendar.DAY_OF_YEAR, - temp);
             result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
+
+
             //calendar.add(Calendar.MONTH, - temp);
             //result.add(new Note(UUID.randomUUID().toString(), messageTitle, messageText, calendar.getTime()));
         }

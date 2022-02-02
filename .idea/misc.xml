@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_note_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_header.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/item_note.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_note_old.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.1296875" />
